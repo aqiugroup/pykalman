@@ -41,22 +41,20 @@ from pykalman import KalmanFilter
 
 # Load data and initialize Kalman Filter
 data = load_robot()
-kf = KalmanFilter(
-    data.transition_matrix,
-    data.observation_matrix,
-    data.initial_transition_covariance,
-    data.initial_observation_covariance,
-    data.transition_offsets,
-    data.observation_offset,
-    data.initial_state_mean,
-    data.initial_state_covariance,
-    em_vars=[
-      'transition_matrices', 'observation_matrices',
-      'transition_covariance', 'observation_covariance',
-      'observation_offsets', 'initial_state_mean',
-      'initial_state_covariance'
-    ]
-)
+kf = KalmanFilter(data.transition_matrix,
+                  data.observation_matrix,
+                  data.initial_transition_covariance,
+                  data.initial_observation_covariance,
+                  data.transition_offsets,
+                  data.observation_offset,
+                  data.initial_state_mean,
+                  data.initial_state_covariance,
+                  em_vars=[
+                      'transition_matrices', 'observation_matrices',
+                      'transition_covariance', 'observation_covariance',
+                      'observation_offsets', 'initial_state_mean',
+                      'initial_state_covariance'
+                  ])
 
 # Learn good values for parameters named in `em_vars` using the EM algorithm
 loglikelihoods = np.zeros(10)
@@ -73,9 +71,8 @@ for t in range(n_timesteps - 1):
     if t == 0:
         blind_state_estimates[t] = kf.initial_state_mean
     blind_state_estimates[t + 1] = (
-      np.dot(kf.transition_matrices, blind_state_estimates[t])
-      + kf.transition_offsets[t]
-    )
+        np.dot(kf.transition_matrices, blind_state_estimates[t]) +
+        kf.transition_offsets[t])
 
 # Estimate the hidden states using observations up to and including
 # time t for t in [0...n_timesteps-1].  This method outputs the mean and
@@ -98,10 +95,8 @@ lines_true = pl.plot(data.states, linestyle='-', color='b')
 lines_blind = pl.plot(blind_state_estimates, linestyle=':', color='m')
 lines_filt = pl.plot(filtered_state_estimates, linestyle='--', color='g')
 lines_smooth = pl.plot(smoothed_state_estimates, linestyle='-.', color='r')
-pl.legend(
-    (lines_true[0], lines_blind[0], lines_filt[0], lines_smooth[0]),
-    ('true', 'blind', 'filtered', 'smoothed')
-)
+pl.legend((lines_true[0], lines_blind[0], lines_filt[0], lines_smooth[0]),
+          ('true', 'blind', 'filtered', 'smoothed'))
 pl.xlabel('time')
 pl.ylabel('state')
 pl.xlim(xmax=500)
