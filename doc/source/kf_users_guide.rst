@@ -242,6 +242,8 @@ is important to understand what assumptions are being made.  To make notation
 concise,  we refer to the hidden states as :math:`x_t`, the measurements as
 :math:`z_t`, and the parameters of the :class:`KalmanFilter` class as follows,
 
+.. tabularcolumns::
+
     +----------------------------+------------------+
     |    Parameter Name          |      Notation    |
     +----------------------------+------------------+

@@ -184,6 +184,8 @@ section, we will again adopt the notation :math:`x_t` to describe the (unknown)
 state at time step :math:`t` and :math:`z_t` to denote the (known) observation.
 The parameters of the Unscented Kalman Filter are as follows,
 
+.. tabularcolumns::
+
     +-----------------------------+------------------+
     | Parameter Name              | Notation         |
     +-----------------------------+------------------+
